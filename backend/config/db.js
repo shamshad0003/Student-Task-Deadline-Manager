@@ -2,8 +2,8 @@
 const mysql = require("mysql2");
 require("dotenv").config();
 
-// Create database connection
-const db = mysql.createConnection({
+// Create database connection pool
+const db = mysql.createPool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER,
@@ -12,15 +12,21 @@ const db = mysql.createConnection({
   ssl: {
     rejectUnauthorized: false,
   },
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-// Connect to database
-db.connect((err) => {
+// For pool, we don't need manual connect() call
+// The pool handles it automatically on first query.
+// But we can test it:
+db.getConnection((err, connection) => {
   if (err) {
-    console.error("Database connection failed:", err);
-    return;
+    console.error("Database pool connection failed:", err.message);
+  } else {
+    console.log("Database pool connected successfully!");
+    connection.release();
   }
-  console.log("Database connected successfully!");
 });
 
 module.exports = db;
