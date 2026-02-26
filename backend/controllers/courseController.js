@@ -5,7 +5,8 @@ const getCourses = async (req, res) => {
         const courses = await Course.findAllByUser(req.user.id);
         res.json(courses);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Course Error:", error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -18,7 +19,8 @@ const getCourse = async (req, res) => {
         }
         res.json(course);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Course Error:", error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -33,7 +35,8 @@ const createCourse = async (req, res) => {
         const courseId = await Course.create(req.user.id, name, description);
         res.status(201).json({ id: courseId, name, description });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Course Error:", error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -49,7 +52,8 @@ const updateCourse = async (req, res) => {
         await Course.update(id, name, description);
         res.json({ message: "Course updated" });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Course Error:", error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
 
