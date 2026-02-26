@@ -7,7 +7,18 @@ const app = express();
 
 // Middleware
 app.use(cors());
+
+// Request Logger (Move to top)
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+    console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  }
+  next();
+});
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // JSON Syntax Error Handler
 app.use((err, req, res, next) => {
@@ -35,11 +46,6 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
 
-// Request Logger Middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
 
 // Test Route
 app.get("/", (req, res) => {

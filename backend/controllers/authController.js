@@ -4,6 +4,10 @@ const User = require('../models/userModel');
 require('dotenv').config();
 
 const register = async (req, res) => {
+  if (!req.body) {
+    console.error("Register Error: req.body is undefined. Check Content-Type header.");
+    return res.status(400).json({ message: 'Request body is missing' });
+  }
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
@@ -38,6 +42,10 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+  if (!req.body) {
+    console.error("Login Error: req.body is undefined. Check Content-Type header.");
+    return res.status(400).json({ message: 'Request body is missing' });
+  }
   const { email, password } = req.body;
 
   if (!email || !password) {
