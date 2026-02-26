@@ -51,10 +51,17 @@ const createTask = async (req, res) => {
             return res.status(403).json({ message: "Access denied" });
         }
 
-        const taskId = await Task.create(courseId, title, description, dueDate);
-        res.status(201).json({ id: taskId, title, description, due_date: dueDate, status: 'pending' });
+        // Format date for MySQL if provided
+        let formattedDate = dueDate;
+        if (dueDate) {
+            formattedDate = new Date(dueDate).toISOString().slice(0, 19).replace('T', ' ');
+        }
+
+        const taskId = await Task.create(courseId, title, description, formattedDate);
+        res.status(201).json({ id: taskId, title, description, due_date: formattedDate, status: 'pending' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Create Task Error:", error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -73,7 +80,13 @@ const updateTask = async (req, res) => {
             return res.status(403).json({ message: "Access denied" });
         }
 
-        await Task.update(id, title, description, dueDate, status || task.status);
+        // Format date for MySQL if provided
+        let formattedDate = dueDate;
+        if (dueDate) {
+            formattedDate = new Date(dueDate).toISOString().slice(0, 19).replace('T', ' ');
+        }
+
+        await Task.update(id, title, description, formattedDate, status || task.status);
         res.json({ message: "Task updated" });
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
