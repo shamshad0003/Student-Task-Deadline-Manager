@@ -1,138 +1,139 @@
 const Task = require('../models/taskModel');
-const Course = require('../models/courseModel');
+const { taskSchemas } = require('../utils/validationSchemas');
+const { verifyCourseOwnership } = require('../utils/ownershipHelper');
+const { formatForMySQL } = require('../utils/dateHelper');
 
-const getTasks = async (req, res) => {
+const getTasks = async (req, res, next) => {
     const { courseId } = req.params;
     try {
-        // Check ownership
-        const course = await Course.findById(courseId);
-        if (!course || course.user_id !== req.user.id) {
-            return res.status(403).json({ message: "Access denied" });
-        }
-
+        await verifyCourseOwnership(courseId, req.user.id);
         const tasks = await Task.findAllByCourse(courseId);
         res.json(tasks);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
 
-const getTask = async (req, res) => {
+const getTask = async (req, res, next) => {
     const { id } = req.params;
     try {
         const task = await Task.findById(id);
         if (!task) {
-            return res.status(404).json({ message: "Task not found" });
+            const err = new Error("Task not found");
+            err.status = 404;
+            throw err;
         }
 
-        // Verify ownership via course
-        const course = await Course.findById(task.course_id);
-        if (!course || course.user_id !== req.user.id) {
-            return res.status(403).json({ message: "Access denied" });
-        }
-
+        await verifyCourseOwnership(task.course_id, req.user.id);
         res.json(task);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
 
-const createTask = async (req, res) => {
+const createTask = async (req, res, next) => {
     const { courseId } = req.params;
-    const { title, description, dueDate } = req.body;
-
-    if (!title) {
-        return res.status(400).json({ message: "Task Title is required" });
-    }
-
     try {
-        const course = await Course.findById(courseId);
-        if (!course || course.user_id !== req.user.id) {
-            return res.status(403).json({ message: "Access denied" });
+        await verifyCourseOwnership(courseId, req.user.id);
+
+        const { error, value } = taskSchemas.create.validate(req.body);
+        if (error) {
+            const err = new Error(error.details[0].message);
+            err.status = 400;
+            throw err;
         }
 
-        // Format date for MySQL if provided
-        let formattedDate = dueDate;
-        if (dueDate) {
-            formattedDate = new Date(dueDate).toISOString().slice(0, 19).replace('T', ' ');
-        }
+        const { title, description, dueDate } = value;
+        const formattedDate = formatForMySQL(dueDate);
 
         const taskId = await Task.create(courseId, title, description, formattedDate);
         res.status(201).json({ id: taskId, title, description, due_date: formattedDate, status: 'pending' });
     } catch (error) {
-        console.error("Create Task Error:", error);
-        res.status(500).json({ message: 'Server error', error: error.message });
+        next(error);
     }
 };
 
-const updateTask = async (req, res) => {
+const updateTask = async (req, res, next) => {
     const { id } = req.params;
-    const { title, description, dueDate, status } = req.body;
-
     try {
         const task = await Task.findById(id);
         if (!task) {
-            return res.status(404).json({ message: "Task not found" });
+            const err = new Error("Task not found");
+            err.status = 404;
+            throw err;
         }
 
-        const course = await Course.findById(task.course_id);
-        if (!course || course.user_id !== req.user.id) {
-            return res.status(403).json({ message: "Access denied" });
+        await verifyCourseOwnership(task.course_id, req.user.id);
+
+        const { error, value } = taskSchemas.update.validate(req.body);
+        if (error) {
+            const err = new Error(error.details[0].message);
+            err.status = 400;
+            throw err;
         }
 
-        // Format date for MySQL if provided
-        let formattedDate = dueDate;
-        if (dueDate) {
-            formattedDate = new Date(dueDate).toISOString().slice(0, 19).replace('T', ' ');
-        }
+        const { title, description, dueDate, status } = value;
+        const formattedDate = dueDate ? formatForMySQL(dueDate) : task.due_date;
 
-        await Task.update(id, title, description, formattedDate, status || task.status);
+        await Task.update(id, title || task.title, description || task.description, formattedDate, status || task.status);
         res.json({ message: "Task updated" });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
 
-const updateTaskStatus = async (req, res) => {
+const updateTaskStatus = async (req, res, next) => {
     const { id } = req.params;
-    const { status } = req.body; // 'pending' or 'completed'
-
     try {
         const task = await Task.findById(id);
         if (!task) {
-            return res.status(404).json({ message: "Task not found" });
+            const err = new Error("Task not found");
+            err.status = 404;
+            throw err;
         }
 
-        const course = await Course.findById(task.course_id);
-        if (!course || course.user_id !== req.user.id) {
-            return res.status(403).json({ message: "Access denied" });
+        await verifyCourseOwnership(task.course_id, req.user.id);
+
+        const { status } = req.body;
+        if (!['pending', 'completed'].includes(status)) {
+            const err = new Error("Invalid status");
+            err.status = 400;
+            throw err;
         }
 
         await Task.updateStatus(id, status);
         res.json({ message: "Task status updated" });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 }
 
-const deleteTask = async (req, res) => {
+const deleteTask = async (req, res, next) => {
     const { id } = req.params;
     try {
         const task = await Task.findById(id);
         if (!task) {
-            return res.status(404).json({ message: "Task not found" });
+            const err = new Error("Task not found");
+            err.status = 404;
+            throw err;
         }
 
-        const course = await Course.findById(task.course_id);
-        if (!course || course.user_id !== req.user.id) {
-            return res.status(403).json({ message: "Access denied" });
-        }
+        await verifyCourseOwnership(task.course_id, req.user.id);
 
         await Task.delete(id);
         res.json({ message: "Task deleted" });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 }
 
-module.exports = { getTasks, getTask, createTask, updateTask, updateTaskStatus, deleteTask };
+const getTaskStats = async (req, res, next) => {
+    try {
+        const stats = await Task.getStatsByUser(req.user.id);
+        res.json(stats);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { getTasks, getTask, createTask, updateTask, updateTaskStatus, deleteTask, getTaskStats };

@@ -1,12 +1,43 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const db = require("./config/db");
+const errorMiddleware = require("./middleware/errorMiddleware");
+
+// Startup Validation
+const requiredEnv = ['JWT_SECRET', 'DB_HOST', 'DB_USER', 'DB_NAME'];
+const missingEnv = requiredEnv.filter(k => !process.env[k]);
+if (missingEnv.length > 0) {
+  console.error(`FATAL ERROR: Missing required environment variables: ${missingEnv.join(', ')}`);
+  process.exit(1);
+}
 
 const app = express();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5175',
+  'http://localhost:5176',
+  'http://localhost:5177',
+  'http://localhost:5178',
+  'http://localhost:5179',
+  'http://localhost:5180'
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.FRONTEND_URL === origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 // Request Logger (Move to top)
 app.use((req, res, next) => {
@@ -46,6 +77,16 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
 
+// API Base Route
+app.get('/api', (req, res) => {
+  res.json({
+    message: "Student Task & Deadline Manager API",
+    status: "Running",
+    version: "1.0.0",
+    endpoints: ["/api/auth", "/api/courses", "/api/tasks"]
+  });
+});
+
 
 // Test Route
 app.get("/", (req, res) => {
@@ -61,6 +102,9 @@ app.use((req, res) => {
     availablePrefixes: ["/api/auth", "/api/courses", "/api/tasks"]
   });
 });
+
+// Global Error Handler
+app.use(errorMiddleware);
 
 // Start Server
 const PORT = process.env.PORT || 5000;

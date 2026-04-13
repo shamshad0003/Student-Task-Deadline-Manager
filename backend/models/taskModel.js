@@ -47,6 +47,24 @@ const Task = {
             [id]
         );
         return result.affectedRows;
+    },
+
+    getStatsByUser: async (userId) => {
+        const [rows] = await db.promise().query(
+            `SELECT 
+                COUNT(*) as total,
+                SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending,
+                SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed
+            FROM tasks t
+            JOIN courses c ON t.course_id = c.id
+            WHERE c.user_id = ?`,
+            [userId]
+        );
+        return {
+            total: rows[0].total || 0,
+            pending: parseInt(rows[0].pending) || 0,
+            completed: parseInt(rows[0].completed) || 0
+        };
     }
 };
 

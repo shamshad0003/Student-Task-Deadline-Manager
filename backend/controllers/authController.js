@@ -1,23 +1,24 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
-require('dotenv').config();
+const { authSchemas } = require('../utils/validationSchemas');
 
-const register = async (req, res) => {
-  if (!req.body) {
-    console.error("Register Error: req.body is undefined. Check Content-Type header.");
-    return res.status(400).json({ message: 'Request body is missing' });
-  }
-  const { username, email, password } = req.body;
-
-  if (!username || !email || !password) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
-
+const register = async (req, res, next) => {
   try {
+    const { error, value } = authSchemas.register.validate(req.body);
+    if (error) {
+      const err = new Error(error.details[0].message);
+      err.status = 400;
+      throw err;
+    }
+
+    const { username, email, password } = value;
+
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      const err = new Error('User already exists');
+      err.status = 400;
+      throw err;
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -26,7 +27,7 @@ const register = async (req, res) => {
     const userId = await User.create(username, email, passwordHash);
 
     // Create token
-    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET || 'secret', {
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
 
@@ -36,34 +37,36 @@ const register = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Auth Error:", error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    next(error);
   }
 };
 
-const login = async (req, res) => {
-  if (!req.body) {
-    console.error("Login Error: req.body is undefined. Check Content-Type header.");
-    return res.status(400).json({ message: 'Request body is missing' });
-  }
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
-
+const login = async (req, res, next) => {
   try {
+    const { error, value } = authSchemas.login.validate(req.body);
+    if (error) {
+      const err = new Error(error.details[0].message);
+      err.status = 400;
+      throw err;
+    }
+
+    const { email, password } = value;
+
     const user = await User.findByEmail(email);
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      const err = new Error('Invalid credentials');
+      err.status = 400;
+      throw err;
     }
 
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      const err = new Error('Invalid credentials');
+      err.status = 400;
+      throw err;
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'secret', {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
 
@@ -73,8 +76,7 @@ const login = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Auth Error:", error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    next(error);
   }
 };
 
