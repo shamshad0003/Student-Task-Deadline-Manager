@@ -3,6 +3,7 @@ services:
     name: student-task-deadline-manager
     runtime: node
     plan: free
+    rootDir: backend
     buildCommand: npm install
     startCommand: node server.js
     envVars:
