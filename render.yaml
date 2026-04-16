@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: student-task-deadline-manager
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.x
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        placeholder: "https://your-frontend.vercel.app"
+      - key: DB_HOST
+        placeholder: "your-db-host"
+      - key: DB_USER
+        placeholder: "your-db-user"
+      - key: DB_PASSWORD
+        placeholder: "your-db-password"
+      - key: DB_NAME
+        placeholder: "your-db-name"
+      - key: DB_SSL
+        value: "true"
