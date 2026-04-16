@@ -4,10 +4,12 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CourseDetails from './pages/CourseDetails';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -29,8 +31,22 @@ function App() {
           />
           <Routes>
             {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route 
+              path="/login" 
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              } 
+            />
+            <Route 
+              path="/register" 
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              } 
+            />
 
             {/* Protected Routes */}
             <Route
@@ -53,8 +69,8 @@ function App() {
             {/* Root Redirects */}
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             
-            {/* 404 Redirect */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            {/* 404 Page */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </Router>
@@ -63,3 +79,4 @@ function App() {
 }
 
 export default App;
+
