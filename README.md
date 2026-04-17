@@ -4,19 +4,17 @@ I built this project to solve a problem every student faces: staying on top of m
 
 ## Screenshots 📸
 
-````carousel
-![Login Page](file:///C:/Users/md232/.gemini/antigravity/brain/5875e37d-cb1c-4d42-84c0-7f8fdc0ed0dd/login_page_clean_1776391675353.png)
-<!-- slide -->
-![Register Page](file:///C:/Users/md232/.gemini/antigravity/brain/5875e37d-cb1c-4d42-84c0-7f8fdc0ed0dd/register_page_clean_1776391681602.png)
-<!-- slide -->
-![Dashboard](file:///C:/Users/md232/.gemini/antigravity/brain/5875e37d-cb1c-4d42-84c0-7f8fdc0ed0dd/dashboard_page_clean_with_course_1776391886180.png)
-<!-- slide -->
-![Tasks List](file:///C:/Users/md232/.gemini/antigravity/brain/5875e37d-cb1c-4d42-84c0-7f8fdc0ed0dd/tasks_list_clean_1776392038308.png)
-````
+### Login Page
+![Login Page](screenshots/login.png)
 
-## Demo 🎥
+### Register Page
+![Register Page](screenshots/register.png)
 
-Check out the full workflow in action: [View Demo Recording](file:///C:/Users/md232/.gemini/antigravity/brain/5875e37d-cb1c-4d42-84c0-7f8fdc0ed0dd/readme_screenshots_1776391657773.webp)
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Tasks List
+![Tasks List](screenshots/tasks.png)
 
 ## Features 🚀
 - **Personalized Accounts**: Secure authentication to keep your academic data private.
@@ -111,4 +109,3 @@ I've deployed the full app so it can be used anywhere:
 
 ## Author
 **Shamshad**
-Student & Aspiring Developer
