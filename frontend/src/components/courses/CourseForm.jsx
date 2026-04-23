@@ -49,11 +49,11 @@ const CourseForm = ({ course, onSave, onCancel, isLoading }) => {
       ></div>
 
       {/* Modal Content */}
-      <div className="relative bg-white rounded-2xl shadow-2xl transform transition-all sm:max-w-lg sm:w-full overflow-hidden border border-gray-100">
+      <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl transform transition-all sm:max-w-lg sm:w-full overflow-hidden border border-gray-100 dark:border-slate-700">
         <form onSubmit={handleSubmit}>
-          <div className="bg-white p-6 sm:p-8">
-            <div className="mb-6 flex justify-between items-center border-b border-gray-100 pb-4">
-              <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight">
+          <div className="bg-white dark:bg-slate-800 p-6 sm:p-8">
+            <div className="mb-6 flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-4">
+              <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                 {course ? 'Edit Course' : 'Add New Course'}
               </h3>
               <button 
@@ -76,7 +76,7 @@ const CourseForm = ({ course, onSave, onCancel, isLoading }) => {
 
             <div className="space-y-5">
               <div>
-                <label htmlFor="course_name" className="block text-sm font-bold text-gray-700 mb-2">
+                <label htmlFor="course_name" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                   Course Name
                 </label>
                 <input
@@ -85,7 +85,7 @@ const CourseForm = ({ course, onSave, onCancel, isLoading }) => {
                   id="course_name"
                   value={formData.course_name}
                   onChange={handleChange}
-                  className="block w-full border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 p-4 border bg-gray-50/50 transition-all text-base"
+                  className="block w-full border-gray-200 dark:border-slate-700 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-white p-4 border bg-gray-50/50 dark:bg-slate-900/50 transition-all text-base"
                   placeholder="e.g. Data Structures & Algorithms"
                   required
                   disabled={isLoading}
@@ -94,7 +94,7 @@ const CourseForm = ({ course, onSave, onCancel, isLoading }) => {
               </div>
 
               <div>
-                <label htmlFor="course_code" className="block text-sm font-bold text-gray-700 mb-2">
+                <label htmlFor="course_code" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                   Course Code
                 </label>
                 <input
@@ -103,7 +103,7 @@ const CourseForm = ({ course, onSave, onCancel, isLoading }) => {
                   id="course_code"
                   value={formData.course_code}
                   onChange={handleChange}
-                  className="block w-full border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 p-4 border bg-gray-50/50 transition-all text-base"
+                  className="block w-full border-gray-200 dark:border-slate-700 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-white p-4 border bg-gray-50/50 dark:bg-slate-900/50 transition-all text-base"
                   placeholder="e.g. CS201"
                   disabled={isLoading}
                 />
@@ -111,7 +111,7 @@ const CourseForm = ({ course, onSave, onCancel, isLoading }) => {
             </div>
           </div>
           
-          <div className="bg-gray-50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse gap-3">
+          <div className="bg-gray-50 dark:bg-slate-900/50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse gap-3">
             <button
               type="submit"
               disabled={isLoading}

@@ -21,6 +21,9 @@ const Dashboard = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
+  
+  // Search state
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchDashboardData();
@@ -97,10 +100,10 @@ const Dashboard = () => {
       {/* Header */}
       <div className="mb-12 flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
         <div>
-          <h1 className="text-4xl font-black text-gray-900 tracking-tighter">
+          <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter">
             Dashboard
           </h1>
-          <p className="text-lg text-gray-500 mt-1 font-medium italic">
+          <p className="text-lg text-gray-500 dark:text-gray-400 mt-1 font-medium italic">
             "Your persistence today is your success tomorrow."
           </p>
         </div>
@@ -166,9 +169,27 @@ const Dashboard = () => {
 
       {/* Course List Section */}
       <div className="mt-8">
-        <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
-            <h2 className="text-2xl font-black text-gray-900 tracking-tight">Your Courses</h2>
-            <span className="text-xs font-black text-gray-400 uppercase tracking-widest">{courses.length} Active</span>
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-gray-100 dark:border-slate-800 pb-4 gap-4">
+            <div className="flex items-center gap-4">
+              <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Your Courses</h2>
+              <span className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">{courses.length} Active</span>
+            </div>
+            
+            {/* Search Input */}
+            <div className="relative w-full md:w-80 group">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Search by name or code..."
+                className="block w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-800 border-2 border-gray-100 dark:border-slate-700 rounded-2xl text-sm font-bold placeholder-gray-400 focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-500 transition-all dark:text-white shadow-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
         </div>
 
         {loading ? (
@@ -178,16 +199,47 @@ const Dashboard = () => {
             ))}
           </div>
         ) : courses.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-up">
-            {courses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                onEdit={handleEditClick}
-                onDelete={handleDeleteCourse}
-              />
-            ))}
-          </div>
+          (() => {
+            const filteredCourses = courses.filter(course => 
+              course.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+              course.code?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            if (filteredCourses.length === 0) {
+              return (
+                <div className="py-20 text-center animate-fade-in">
+                  <div className="bg-gray-100 dark:bg-slate-800 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 text-gray-400">
+                    <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">No results found</h3>
+                  <p className="text-gray-500 dark:text-gray-400 font-medium">
+                    We couldn't find any courses matching "{searchTerm}"
+                  </p>
+                  <button 
+                    onClick={() => setSearchTerm('')}
+                    className="mt-6 text-sm font-black text-indigo-600 hover:underline uppercase tracking-widest"
+                  >
+                    Clear Search
+                  </button>
+                </div>
+              );
+            }
+
+            return (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-up">
+                {filteredCourses.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    course={course}
+                    onEdit={handleEditClick}
+                    onDelete={handleDeleteCourse}
+                  />
+                ))}
+              </div>
+            );
+          })()
         ) : (
           <EmptyState onAddClick={handleCreateClick} />
         )}

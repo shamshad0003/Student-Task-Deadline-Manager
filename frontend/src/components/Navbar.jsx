@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +25,7 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-[100] border-b border-gray-100">
+    <nav className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-[100] border-b border-gray-100 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           {/* Logo Section */}
@@ -34,7 +36,7 @@ const Navbar = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <span className="text-2xl font-black tracking-tighter text-gray-900">
+              <span className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white">
                 Task<span className="text-indigo-600">Sync</span>
               </span>
             </Link>
@@ -50,18 +52,34 @@ const Navbar = () => {
                     to={link.path}
                     className={`px-5 py-2.5 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${
                       isActive(link.path) 
-                        ? 'bg-gray-900 text-white shadow-xl shadow-gray-200' 
-                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                        ? 'bg-gray-900 text-white shadow-xl shadow-gray-200 dark:bg-white dark:text-gray-900 dark:shadow-none' 
+                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white'
                     }`}
                   >
                     {link.name}
                   </Link>
                 ))}
-                <div className="h-6 w-px bg-gray-100 mx-4"></div>
+                <div className="h-6 w-px bg-gray-100 mx-4 dark:bg-gray-800"></div>
                 <div className="flex items-center space-x-4">
+                  <button
+                    onClick={toggleTheme}
+                    className="p-3 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:text-gray-400 dark:hover:text-amber-400 dark:hover:bg-gray-800 rounded-xl transition-all"
+                    title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                  >
+                    {isDarkMode ? (
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728L5.636 5.636" />
+                        <circle cx="12" cy="12" r="5" strokeWidth="2.5" />
+                      </svg>
+                    ) : (
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                      </svg>
+                    )}
+                  </button>
                   <div className="flex flex-col items-end">
                     <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Signed in as</span>
-                    <span className="text-sm font-black text-gray-900">{user?.username}</span>
+                    <span className="text-sm font-black text-gray-900 dark:text-gray-100">{user?.username}</span>
                   </div>
                   <button
                     onClick={handleLogout}
@@ -113,12 +131,29 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div className="md:hidden animate-fade-in">
-          <div className="px-4 pt-2 pb-6 space-y-2 bg-white border-t border-gray-50 shadow-2xl">
+          <div className="px-4 pt-2 pb-6 space-y-2 bg-white dark:bg-slate-900 border-t border-gray-50 dark:border-slate-800 shadow-2xl">
             {isAuthenticated ? (
               <>
-                <div className="px-4 py-4 mb-2 bg-gray-50 rounded-2xl">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Authenticated user</p>
-                    <p className="text-lg font-black text-gray-900">{user?.username}</p>
+                <div className="px-4 py-4 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl flex justify-between items-center">
+                    <div>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Authenticated user</p>
+                      <p className="text-lg font-black text-gray-900 dark:text-white">{user?.username}</p>
+                    </div>
+                    <button
+                      onClick={toggleTheme}
+                      className="p-3 bg-white dark:bg-gray-700 shadow-sm border border-gray-100 dark:border-gray-600 rounded-xl"
+                    >
+                      {isDarkMode ? (
+                        <svg className="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728L5.636 5.636" />
+                          <circle cx="12" cy="12" r="5" strokeWidth="2.5" />
+                        </svg>
+                      ) : (
+                        <svg className="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                      )}
+                    </button>
                 </div>
                 {navLinks.map((link) => (
                   <Link

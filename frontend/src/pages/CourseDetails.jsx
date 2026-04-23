@@ -20,6 +20,9 @@ const CourseDetails = () => {
   const [editingTask, setEditingTask] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
 
+  // Search state
+  const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
     fetchCourseData();
   }, [id]);
@@ -126,8 +129,8 @@ const CourseDetails = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
         </div>
-        <h2 className="text-3xl font-black text-gray-900 mb-4">{error || 'Course not found'}</h2>
-        <Link to="/dashboard" className="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-indigo-600 transition-all">
+        <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-4">{error || 'Course not found'}</h2>
+        <Link to="/dashboard" className="inline-flex items-center px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-indigo-100 transition-all">
           ← Back to Dashboard
         </Link>
       </div>
@@ -146,8 +149,8 @@ const CourseDetails = () => {
         </Link>
 
         {/* Hero Header */}
-        <div className="relative bg-white p-8 sm:p-12 rounded-[2.5rem] shadow-xl shadow-indigo-900/5 border border-gray-100 overflow-hidden group">
-          <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-indigo-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
+        <div className="relative bg-white dark:bg-slate-800 p-8 sm:p-12 rounded-[2.5rem] shadow-xl shadow-indigo-900/5 border border-gray-100 dark:border-slate-700 overflow-hidden group">
+          <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-indigo-50 dark:bg-indigo-900/20 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
           
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="flex-grow">
@@ -160,17 +163,17 @@ const CourseDetails = () => {
                     {tasks.filter(t => t.status === 'pending').length} Active Deadlines
                 </span>
               </div>
-              <h1 className="text-4xl sm:text-6xl font-black text-gray-900 tracking-tighter leading-none mb-4 break-words">
+              <h1 className="text-4xl sm:text-6xl font-black text-gray-900 dark:text-white tracking-tighter leading-none mb-4 break-words">
                 {course.name}
               </h1>
-              <p className="text-gray-500 font-medium max-w-2xl text-lg leading-relaxed">
+              <p className="text-gray-500 dark:text-gray-400 font-medium max-w-2xl text-lg leading-relaxed">
                 Stay on top of your semester. Add tasks, set deadlines, and track your progress through this course.
               </p>
             </div>
             
             <button
               onClick={handleAddTaskClick}
-              className="flex-shrink-0 px-10 py-5 bg-gray-900 text-white rounded-2xl font-black text-sm uppercase tracking-[0.15em] shadow-2xl shadow-gray-900/20 hover:bg-indigo-600 active:scale-95 transition-all outline-none focus:ring-4 focus:ring-indigo-100 flex items-center justify-center gap-3"
+              className="flex-shrink-0 px-10 py-5 bg-gray-900 dark:bg-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-[0.15em] shadow-2xl shadow-gray-900/20 hover:bg-indigo-600 dark:hover:bg-white dark:hover:text-gray-900 active:scale-95 transition-all outline-none focus:ring-4 focus:ring-indigo-100 flex items-center justify-center gap-3"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" />
@@ -183,23 +186,41 @@ const CourseDetails = () => {
 
       {/* Main Content Area */}
       <div className="space-y-8 mt-12">
-        <div className="flex items-center justify-between px-4 pb-4 border-b border-gray-100">
+        <div className="flex flex-col md:flex-row md:items-center justify-between px-4 pb-4 border-b border-gray-100 dark:border-slate-800 gap-4">
           <div className="flex items-end gap-3">
-            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Timeline</h2>
-            <span className="text-gray-300 font-medium mb-1">/</span>
+            <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Timeline</h2>
+            <span className="text-gray-300 dark:text-gray-600 font-medium mb-1">/</span>
             <span className="text-indigo-600 font-black text-sm uppercase tracking-widest mb-1">
                 {tasks.length} Total
             </span>
           </div>
           
-          <div className="hidden sm:flex items-center space-x-6">
-            <div className="flex items-center space-x-2 text-[10px] font-black text-gray-400 uppercase tracking-widest">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-200"></span>
-              <span>Pending</span>
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            {/* Search Input */}
+            <div className="relative w-full sm:w-64 group">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Find a task..."
+                className="block w-full pl-9 pr-3 py-2 bg-gray-50 dark:bg-slate-900 border-2 border-gray-100 dark:border-slate-700 rounded-xl text-xs font-bold placeholder-gray-400 focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-500 transition-all dark:text-white"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
-            <div className="flex items-center space-x-2 text-[10px] font-black text-gray-400 uppercase tracking-widest">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm shadow-green-200"></span>
-              <span>Done</span>
+
+            <div className="hidden sm:flex items-center space-x-6">
+              <div className="flex items-center space-x-2 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-200"></span>
+                <span>Pending</span>
+              </div>
+              <div className="flex items-center space-x-2 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm shadow-green-200"></span>
+                <span>Done</span>
+              </div>
             </div>
           </div>
         </div>
@@ -211,17 +232,48 @@ const CourseDetails = () => {
             ))}
           </div>
         ) : tasks.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-up">
-            {tasks.map(task => (
-              <TaskCard 
-                key={task.id} 
-                task={task} 
-                onEdit={handleEditTaskClick}
-                onDelete={handleDeleteTask}
-                onToggleStatus={handleToggleStatus}
-              />
-            ))}
-          </div>
+          (() => {
+            const filteredTasks = tasks.filter(task => 
+              task.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+              task.description?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            if (filteredTasks.length === 0) {
+              return (
+                <div className="py-20 text-center animate-fade-in">
+                  <div className="bg-gray-50 dark:bg-slate-800 w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6 text-gray-300">
+                    <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">No tasks found</h3>
+                  <p className="text-gray-500 dark:text-gray-400 font-medium">
+                    We couldn't find any tasks matching "{searchTerm}"
+                  </p>
+                  <button 
+                    onClick={() => setSearchTerm('')}
+                    className="mt-6 text-xs font-black text-indigo-600 hover:underline uppercase tracking-widest"
+                  >
+                    Reset Filter
+                  </button>
+                </div>
+              );
+            }
+
+            return (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-up">
+                {filteredTasks.map(task => (
+                  <TaskCard 
+                    key={task.id} 
+                    task={task} 
+                    onEdit={handleEditTaskClick}
+                    onDelete={handleDeleteTask}
+                    onToggleStatus={handleToggleStatus}
+                  />
+                ))}
+              </div>
+            );
+          })()
         ) : (
           <div className="bg-white rounded-[2.5rem] border-4 border-dashed border-gray-100 p-16 sm:p-24 text-center transition-all hover:border-indigo-100 group">
             <div className="relative inline-block mb-8">

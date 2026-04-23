@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
@@ -10,25 +11,35 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CourseDetails from './pages/CourseDetails';
 import NotFound from './pages/NotFound';
+import { useTheme } from './context/ThemeContext';
+
+const ThemedToaster = () => {
+  const { isDarkMode } = useTheme();
+  
+  return (
+    <Toaster 
+      position="top-right"
+      toastOptions={{
+        className: 'font-bold text-sm rounded-xl py-3 px-5 shadow-2xl',
+        duration: 4000,
+        style: {
+          background: isDarkMode ? '#1e293b' : '#fff',
+          color: isDarkMode ? '#f8fafc' : '#111827',
+          border: isDarkMode ? '1px solid #334155' : '1px solid #f3f4f6'
+        },
+      }}
+    />
+  );
+};
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
         <Layout>
           {/* Toast notifications */}
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              className: 'font-bold text-sm rounded-xl py-3 px-5 shadow-2xl',
-              duration: 4000,
-              style: {
-                background: '#fff',
-                color: '#111827',
-                border: '1px solid #f3f4f6'
-              },
-            }}
-          />
+          <ThemedToaster />
           <Routes>
             {/* Public Routes */}
             <Route 
@@ -75,6 +86,7 @@ function App() {
         </Layout>
       </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

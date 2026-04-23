@@ -11,12 +11,12 @@ const TaskCard = ({ task, onEdit, onDelete, onToggleStatus }) => {
 
   const getStatusStyles = () => {
     return isCompleted 
-      ? 'bg-green-100 text-green-700 border-green-200 shadow-sm' 
-      : 'bg-amber-100 text-amber-700 border-amber-200 shadow-sm';
+      ? 'bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400 border-green-200 dark:border-green-900/50 shadow-sm' 
+      : 'bg-amber-100 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/50 shadow-sm';
   };
 
   return (
-    <div className={`group bg-white rounded-2xl shadow-sm border transition-all duration-300 p-6 hover:shadow-xl ${isCompleted ? 'border-green-100 opacity-75' : 'border-gray-100'}`}>
+    <div className={`group bg-white dark:bg-slate-800 rounded-2xl shadow-sm border transition-all duration-300 p-6 hover:shadow-xl ${isCompleted ? 'border-green-100 dark:border-green-900/50 opacity-75' : 'border-gray-100 dark:border-slate-700'}`}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start space-x-4 flex-grow">
           {/* Status Toggle Button */}
@@ -26,7 +26,7 @@ const TaskCard = ({ task, onEdit, onDelete, onToggleStatus }) => {
               className={`flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 transform active:scale-90 ${
                 isCompleted 
                   ? 'bg-green-500 border-green-500 text-white shadow-md' 
-                  : 'bg-white border-gray-300 hover:border-indigo-500 hover:bg-indigo-50'
+                  : 'bg-white dark:bg-slate-900 border-gray-300 dark:border-slate-600 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-slate-800'
               }`}
               title={isCompleted ? 'Mark as Pending' : 'Mark as Completed'}
             >
@@ -41,12 +41,12 @@ const TaskCard = ({ task, onEdit, onDelete, onToggleStatus }) => {
           </div>
 
           <div className="flex-grow min-w-0">
-            <h4 className={`text-xl font-bold tracking-tight transition-all duration-300 ${isCompleted ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
+            <h4 className={`text-xl font-bold tracking-tight transition-all duration-300 ${isCompleted ? 'text-gray-400 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-white'}`}>
               {task.title}
             </h4>
             
             {task.description && (
-              <p className={`mt-2 text-sm max-w-md line-clamp-2 transition-all duration-300 ${isCompleted ? 'text-gray-300' : 'text-gray-500 font-medium'}`}>
+              <p className={`mt-2 text-sm max-w-md line-clamp-2 transition-all duration-300 ${isCompleted ? 'text-gray-400 dark:text-gray-600' : 'text-gray-500 dark:text-gray-400 font-medium'}`}>
                 {task.description}
               </p>
             )}
@@ -56,8 +56,8 @@ const TaskCard = ({ task, onEdit, onDelete, onToggleStatus }) => {
                 {task.status}
               </span>
               
-              <div className="flex items-center text-xs text-gray-400 font-bold uppercase tracking-wider bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
-                <svg className="mr-1.5 h-3.5 w-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="flex items-center text-xs text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider bg-gray-50 dark:bg-slate-900/50 px-3 py-1 rounded-full border border-gray-100 dark:border-slate-700">
+                <svg className="mr-1.5 h-3.5 w-3.5 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 {formatDate(task.due_date)}

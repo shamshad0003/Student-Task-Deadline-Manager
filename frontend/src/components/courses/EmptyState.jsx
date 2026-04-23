@@ -2,12 +2,12 @@ import React from 'react';
 
 const EmptyState = ({ onAddClick }) => {
   return (
-    <div className="card-premium p-12 sm:p-20 min-h-[450px] flex flex-col items-center justify-center text-center overflow-hidden relative group">
+    <div className="card-premium p-12 sm:p-20 min-h-[450px] flex flex-col items-center justify-center text-center overflow-hidden relative group dark:bg-slate-800 dark:border-slate-700">
       {/* Decorative background element */}
-      <div className="absolute top-0 left-0 -mt-20 -ml-20 w-64 h-64 bg-indigo-50 rounded-full opacity-30 group-hover:scale-110 transition-transform duration-700"></div>
+      <div className="absolute top-0 left-0 -mt-20 -ml-20 w-64 h-64 bg-indigo-50 dark:bg-indigo-900/10 rounded-full opacity-30 group-hover:scale-110 transition-transform duration-700"></div>
       
       <div className="relative z-10 flex flex-col items-center">
-        <div className="bg-indigo-600 p-8 rounded-[2.5rem] mb-10 shadow-2xl shadow-indigo-200 group-hover:rotate-6 transition-transform">
+        <div className="bg-indigo-600 p-8 rounded-[2.5rem] mb-10 shadow-2xl shadow-indigo-200 dark:shadow-none group-hover:rotate-6 transition-transform">
           <svg
             className="h-14 w-14 text-white"
             fill="none"
@@ -22,13 +22,13 @@ const EmptyState = ({ onAddClick }) => {
             />
           </svg>
         </div>
-        <h3 className="text-3xl font-black text-gray-900 tracking-tighter mb-4">No courses yet</h3>
-        <p className="text-gray-400 font-medium mt-1 max-w-sm text-lg leading-relaxed">
+        <h3 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter mb-4">No courses yet</h3>
+        <p className="text-gray-400 dark:text-gray-500 font-medium mt-1 max-w-sm text-lg leading-relaxed">
           Start your journey by adding your first course. We'll help you organize tasks and hit every deadline.
         </p>
         <button
           onClick={onAddClick}
-          className="mt-12 px-10 py-5 bg-gray-900 text-white btn-premium shadow-2xl shadow-gray-300 hover:bg-indigo-600 flex items-center gap-3"
+          className="mt-12 px-10 py-5 bg-gray-900 dark:bg-indigo-600 text-white btn-premium shadow-2xl shadow-gray-300 dark:shadow-none hover:bg-indigo-600 dark:hover:bg-white dark:hover:text-gray-900 flex items-center gap-3"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" />

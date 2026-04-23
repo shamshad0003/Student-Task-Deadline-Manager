@@ -65,10 +65,10 @@ const TaskForm = ({ task, onSave, onCancel, isLoading }) => {
       ></div>
 
       {/* Modern Modal Container */}
-      <div className="relative bg-white rounded-3xl shadow-2xl transform transition-all sm:max-w-md sm:w-full overflow-hidden border border-gray-100 flex flex-col">
+      <div className="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl transform transition-all sm:max-w-md sm:w-full overflow-hidden border border-gray-100 dark:border-slate-700 flex flex-col">
         {/* Header */}
-        <div className="bg-gray-50/50 px-8 py-6 border-b border-gray-100 flex justify-between items-center">
-          <h3 className="text-2xl font-black text-gray-900 tracking-tight">
+        <div className="bg-gray-50/50 dark:bg-slate-900/50 px-8 py-6 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center">
+          <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
             {task ? 'Edit Task' : 'New Task'}
           </h3>
           <button 
@@ -105,7 +105,7 @@ const TaskForm = ({ task, onSave, onCancel, isLoading }) => {
                 className={`block w-full border-2 transition-all duration-200 rounded-2xl p-4 text-base font-medium placeholder-gray-300 outline-none ${
                     errorPath === 'title' 
                     ? 'border-red-200 bg-red-50/30 focus:border-red-400' 
-                    : 'border-gray-50 bg-gray-50/50 focus:border-indigo-500 focus:bg-white focus:shadow-inner'
+                    : 'border-gray-50 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-900/50 focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:shadow-inner dark:text-white'
                 }`}
                 placeholder="What needs to be done?"
                 required
@@ -126,7 +126,7 @@ const TaskForm = ({ task, onSave, onCancel, isLoading }) => {
                 rows="3"
                 value={formData.description}
                 onChange={handleChange}
-                className="block w-full border-2 border-gray-50 bg-gray-50/50 focus:border-indigo-500 focus:bg-white focus:shadow-inner transition-all duration-200 rounded-2xl p-4 text-base font-medium placeholder-gray-300 outline-none resize-none"
+                className="block w-full border-2 border-gray-50 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-900/50 focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:shadow-inner transition-all duration-200 rounded-2xl p-4 text-base font-medium placeholder-gray-300 outline-none resize-none dark:text-white"
                 placeholder="Add more details..."
                 disabled={isLoading}
               />
@@ -145,8 +145,8 @@ const TaskForm = ({ task, onSave, onCancel, isLoading }) => {
                 onChange={handleChange}
                 className={`block w-full border-2 transition-all duration-200 rounded-2xl p-4 text-base font-medium outline-none ${
                     errorPath === 'dueDate' 
-                    ? 'border-red-200 bg-red-50/30 focus:border-red-400' 
-                    : 'border-gray-50 bg-gray-50/50 focus:border-indigo-500 focus:bg-white focus:shadow-inner'
+                    ? 'border-red-200 bg-red-50/30 focus:border-red-400 dark:text-white' 
+                    : 'border-gray-50 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-900/50 focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:shadow-inner dark:text-white'
                 }`}
                 required
                 disabled={isLoading}
@@ -156,11 +156,11 @@ const TaskForm = ({ task, onSave, onCancel, isLoading }) => {
           </div>
           
           {/* Footer Actions */}
-          <div className="bg-gray-50/50 px-8 py-6 flex flex-col sm:flex-row-reverse gap-3">
+          <div className="bg-gray-50/50 dark:bg-slate-900/50 px-8 py-6 flex flex-col sm:flex-row-reverse gap-3">
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full sm:w-auto inline-flex items-center justify-center rounded-2xl bg-gray-900 px-8 py-4 text-sm font-black text-white transition-all hover:bg-indigo-600 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-gray-900/10"
+              className="group relative w-full sm:w-auto inline-flex items-center justify-center rounded-2xl bg-gray-900 dark:bg-indigo-600 px-8 py-4 text-sm font-black text-white transition-all hover:bg-indigo-600 dark:hover:bg-white dark:hover:text-gray-900 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-gray-900/10"
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">
