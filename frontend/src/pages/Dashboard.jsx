@@ -202,7 +202,7 @@ const Dashboard = () => {
           (() => {
             const filteredCourses = courses.filter(course => 
               course.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-              course.code?.toLowerCase().includes(searchTerm.toLowerCase())
+              course.description?.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
             if (filteredCourses.length === 0) {

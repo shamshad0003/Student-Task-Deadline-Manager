@@ -27,12 +27,12 @@ const taskSchemas = {
     create: Joi.object({
         title: Joi.string().min(2).max(100).required(),
         description: Joi.string().max(500).allow('', null),
-        dueDate: Joi.string().isoDate().allow('', null),
+        dueDate: Joi.date().allow('', null),
     }),
     update: Joi.object({
         title: Joi.string().min(2).max(100),
         description: Joi.string().max(500).allow('', null),
-        dueDate: Joi.string().isoDate().allow('', null),
+        dueDate: Joi.date().allow('', null),
         status: Joi.string().valid('pending', 'completed')
     })
 };
