@@ -1,112 +1,142 @@
-# Student Task & Deadline Manager 🎓
+# 🚀 TaskSync | Student Task & Deadline Manager
 
-I built this project to solve a problem every student faces: staying on top of multiple courses and their ever-shifting deadlines. This is a full-stack web application that helps you organize your semester into clear, manageable tasks so you can focus on actually studying instead of worrying about when things are due.
+[![Status](https://img.shields.io/badge/Status-Live-success.svg)](https://student-task-deadline-manager.vercel.app)
+[![React](https://img.shields.io/badge/Frontend-React%20(Vite)-blue.svg)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Backend-Node.js-green.svg)](https://nodejs.org/)
+[![MySQL](https://img.shields.io/badge/Database-MySQL-orange.svg)](https://www.mysql.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Screenshots 📸
+**TaskSync** is a professional, full-stack web application designed to help students organize their academic life. It provides a centralized hub for managing courses, tracking deadlines, and storing study materials, all within a beautiful, responsive interface.
 
-### Login Page
-![Login Page](screenshots/login.png)
+[Live Demo](https://student-task-deadline-manager.vercel.app) • [Backend API](https://student-task-deadline-manager.onrender.com)
 
-### Register Page
-![Register Page](screenshots/register.png)
+---
 
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
+## ✨ Features
 
-### Tasks List
-![Tasks List](screenshots/tasks.png)
+- **🎯 Intelligent Dashboard**: Overview of pending deadlines and course progress at a glance.
+- **📚 Course Discovery & Management**: Organize your semester by individual subjects.
+- **✅ Smart Task Tracking**: Comprehensive task list with due dates, search filters, and progress toggles.
+- **📎 Course Materials**: Securely upload and manage syllabus, lecture notes, and references for every subject.
+- **🌓 Adaptive Theme**: Seamless Dark Mode for late-night study sessions.
+- **📱 Mobile First**: Fully responsive design that works perfectly on any device.
+- **🔐 Secure Auth**: Robust security using JWT (JSON Web Tokens) and Bcrypt hashing.
 
-## Features 🚀
-- **Personalized Accounts**: Secure authentication to keep your academic data private.
-- **Dynamic Dashboard**: A bird's-eye view of your total, pending, and completed tasks.
-- **Course Management**: Organized sections for each of your subjects.
-- **Smart Task Tracking**: Detailed task list with due dates, search filter, and progress toggles.
-- **Course Materials**: Upload documents, notes, and references for each course.
-- **Dark Mode**: Toggleable dark/light themes for late-night study sessions.
-- **Responsive Design**: Works perfectly whether you're studying on a laptop or checking on your phone.
+---
 
-## Tech Stack 🛠️
+## 📸 Screenshots
 
-- **Frontend**: React (Vite) + Tailwind CSS 4.0
-- **Backend**: Node.js + Express
-- **Database**: MySQL (PlanetScale/Render managed)
-- **Auth**: JWT (JSON Web Tokens) with Bcrypt password hashing
-- **Global State**: React Context API
+| Login Page | Dashboard |
+|:---:|:---:|
+| ![Login](screenshots/login.png) | ![Dashboard](screenshots/dashboard.png) |
 
-## How to Run it Locally
+| Tasks List | Register |
+|:---:|:---:|
+| ![Tasks](screenshots/tasks.png) | ![Register](screenshots/register.png) |
 
-### 1. Prerequisite
-Make sure you have **Node.js** and **MySQL** installed on your computer.
+---
 
-### 2. Setup the Database
-Run this SQL command in your MySQL terminal to create the tables:
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework**: React 18 (Vite)
+- **Styling**: Tailwind CSS 4.0
+- **State management**: Context API
+- **Routing**: React Router 6
+- **Notifications**: React Hot Toast
+
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: MySQL (Managed via PlanetScale/Render)
+- **Security**: JWT & Bcrypt.js
+- **Validation**: Joi
+- **File Handling**: Multer
+
+---
+
+## ⚙️ Local Development
+
+### 1. Prerequisites
+- **Node.js** (v18+)
+- **MySQL** (v8+)
+
+### 2. Database Setup
 ```sql
 CREATE DATABASE student_manager;
 USE student_manager;
-
--- You'll need tables for users, courses, and tasks. 
--- I've included the schema logic in the backend models.
+-- Run backend/database/schema.sql to initialize tables
 ```
 
-### 3. Clone and Install
+### 3. Installation
 ```bash
 # Clone the repository
 git clone https://github.com/shamshad0003/Student-Task-Deadline-Manager.git
-
-# Go into the project
 cd Student-Task-Deadline-Manager
 
-# Install backend dependencies
-cd backend
+# Install dependencies (Root, Backend, and Frontend)
 npm install
-
-# Install frontend dependencies
-cd ../frontend
-npm install
+cd backend && npm install
+cd ../frontend && npm install
 ```
 
-### 4. Set Environment Variables
-Create a `.env` file in the **backend** folder:
+### 4. Environment Variables
+**Backend (.env)**
 ```env
 PORT=5000
 DB_HOST=localhost
 DB_USER=your_username
 DB_PASSWORD=your_password
 DB_NAME=student_manager
-JWT_SECRET=pick_a_random_string
+JWT_SECRET=your_super_secret_key
 FRONTEND_URL=http://localhost:5173
 ```
 
-Create a `.env` file in the **frontend** folder:
+**Frontend (.env)**
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-### 5. Start the App
-Run this in the **backend** folder:
+### 5. Running the App
+**Start Backend:**
 ```bash
+cd backend
 npm start
 ```
-Run this in the **frontend** folder:
+
+**Start Frontend:**
 ```bash
+cd frontend
 npm run dev
 ```
 
-## API Overview
-The backend provides a REST API that the frontend talks to.
-- `/api/auth`: Handles registration and login.
-- `/api/courses`: CRUD operations for your courses.
-- `/api/tasks`: Manage tasks and get progress statistics.
+---
 
-## Deployment
-I've deployed the full app so it can be used anywhere:
-- **Frontend**: Hosted on [Vercel](https://student-task-deadline-manager.vercel.app)
-- **Backend API**: Hosted on [Render](https://student-task-deadline-manager.onrender.com)
+## 📡 API Endpoints
 
-## Future Improvements
-- [ ] **Email Reminders**: Get an alert 24 hours before a deadline.
-- [ ] **Calendar View**: See your deadlines in a monthly calendar format.
-- [ ] **Collaboration**: Share courses or tasks with study buddies.
+| Endpoint | Method | Description |
+|:---|:---|:---|
+| `/api/auth/register` | POST | Create a new student account |
+| `/api/auth/login` | POST | Authenticate and get JWT |
+| `/api/courses` | GET/POST | List and create courses |
+| `/api/tasks` | GET/POST | Manage deadlines and tasks |
+| `/api/files` | POST/GET | Upload/retrieve course materials |
 
-## Author
+---
+
+## 🚀 Future Roadmap
+- [ ] **Email Reminders**: Automated alerts 24h before deadlines.
+- [ ] **Calendar View**: Visual monthly timeline of all tasks.
+- [ ] **Study Groups**: Shared course folders for collaboration.
+- [ ] **Progress Analytics**: Graphed performance across different subjects.
+
+---
+
+## 👨‍💻 Author
 **Shamshad**
+- GitHub: [@shamshad0003](https://github.com/shamshad0003)
+
+---
+
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
