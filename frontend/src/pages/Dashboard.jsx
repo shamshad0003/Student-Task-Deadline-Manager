@@ -7,9 +7,11 @@ import CourseForm from '../components/courses/CourseForm';
 import EmptyState from '../components/courses/EmptyState';
 import { CourseCardSkeleton, StatsSkeleton } from '../components/shared/Skeleton';
 import StatsCard from '../components/dashboard/StatsCard';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import toast from 'react-hot-toast';
 
 const Dashboard = () => {
+  useDocumentTitle('Dashboard');
   const { user } = useAuth();
   const [courses, setCourses] = useState([]);
   const [stats, setStats] = useState({ total: 0, pending: 0, completed: 0 });

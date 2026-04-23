@@ -7,11 +7,13 @@ import TaskForm from '../components/tasks/TaskForm';
 import CourseMaterials from '../components/courses/CourseMaterials';
 import LoadingState from '../components/courses/LoadingState';
 import { TaskCardSkeleton } from '../components/shared/Skeleton';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import toast from 'react-hot-toast';
 
 const CourseDetails = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
+  useDocumentTitle(course ? course.name : 'Loading Course...');
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
