@@ -38,6 +38,7 @@ const Register = () => {
     }
   };
 
+  return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gray-50 dark:bg-slate-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors">
       <div className="max-w-md w-full space-y-8 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700">
         <div>
