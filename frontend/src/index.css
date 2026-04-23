@@ -11,21 +11,21 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f9fafb; /* bg-gray-50 */
-  color: #111827; /* text-gray-900 */
+  background-color: #f8fafc; /* slate-50 */
+  color: #0f172a; /* slate-900 */
   overflow-x: hidden;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dark body, 
 html.dark {
-  background-color: #0f172a; /* slate-900 */
+  background-color: #020617; /* deep slate-950 */
   color: #f8fafc; /* slate-50 */
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -33,12 +33,22 @@ html.dark {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #e5e7eb; /* bg-gray-200 */
+  background-color: #e2e8f0; /* slate-200 */
   border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #1e293b; /* slate-800 */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #d1d5db; /* bg-gray-300 */
+  background-color: #cbd5e1; /* slate-300 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #334155; /* slate-700 */
 }
 
 /* Base Layout Polish */
@@ -46,27 +56,13 @@ html.dark {
   max-width: 80rem; /* max-w-7xl */
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .container-custom {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-custom {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 /* Modern Animations */
 @keyframes slide-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -75,58 +71,48 @@ html.dark {
   to { opacity: 1; }
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
 .animate-slide-up {
-  animation: slide-up 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  animation: slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .animate-fade-in {
-  animation: fade-in 0.3s ease-in forwards;
+  animation: fade-in 0.4s ease-out forwards;
 }
 
-.animate-shake {
-  animation: shake 0.2s ease-in-out 0s 2;
-}
-
-/* Global Transition Utilities */
-.transition-standard {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-/* Input Styles Override for Premium Look */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  opacity: 0.4;
-  transition: opacity 0.2s;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
-}
-
-/* Soft Corner Components - Fallback to standard CSS to avoid @apply issues in v4 */
+/* Premium Card & Components */
 .card-premium {
   background-color: white;
-  border-radius: 2rem;
-  border: 1px solid #f3f4f6;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s;
+  border-radius: 2.5rem;
+  border: 1px solid rgba(241, 245, 249, 1);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dark .card-premium {
-  background-color: #1e293b; /* slate-800 */
-  border-color: #334155; /* slate-700 */
+  background-color: #0f172a; /* slate-900 */
+  border-color: rgba(30, 41, 59, 0.5);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .card-premium:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08);
+}
+
+.dark .card-premium:hover {
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Glass Effect Utility */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-effect {
+  background: rgba(15, 23, 42, 0.8);
 }
 
 .btn-premium {
