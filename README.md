@@ -1,4 +1,4 @@
-# 🚀 TaskSync | Student Task & Deadline Manager
+# TaskSync | Student Task & Deadline Manager
 
 [![Status](https://img.shields.io/badge/Status-Live-success.svg)](https://student-task-deadline-manager.vercel.app)
 [![React](https://img.shields.io/badge/Frontend-React%20(Vite)-blue.svg)](https://reactjs.org/)
@@ -6,25 +6,25 @@
 [![MySQL](https://img.shields.io/badge/Database-MySQL-orange.svg)](https://www.mysql.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**TaskSync** is a professional, full-stack web application designed to help students organize their academic life. It provides a centralized hub for managing courses, tracking deadlines, and storing study materials, all within a beautiful, responsive interface.
+TaskSync is a professional, full-stack web application designed to help students organize their academic life. It provides a centralized hub for managing courses, tracking deadlines, and storing study materials, all within a beautiful, responsive interface.
 
 [Live Demo](https://student-task-deadline-manager.vercel.app) • [Backend API](https://student-task-deadline-manager.onrender.com)
 
 ---
 
-## ✨ Features
+## Features
 
-- **🎯 Intelligent Dashboard**: Overview of pending deadlines and course progress at a glance.
-- **📚 Course Discovery & Management**: Organize your semester by individual subjects.
-- **✅ Smart Task Tracking**: Comprehensive task list with due dates, search filters, and progress toggles.
-- **📎 Course Materials**: Securely upload and manage syllabus, lecture notes, and references for every subject.
-- **🌓 Adaptive Theme**: Seamless Dark Mode for late-night study sessions.
-- **📱 Mobile First**: Fully responsive design that works perfectly on any device.
-- **🔐 Secure Auth**: Robust security using JWT (JSON Web Tokens) and Bcrypt hashing.
+- **Intelligent Dashboard**: Overview of pending deadlines and course progress at a glance.
+- **Course Discovery & Management**: Organize your semester by individual subjects.
+- **Smart Task Tracking**: Comprehensive task list with due dates, search filters, and progress toggles.
+- **Course Materials**: Securely upload and manage syllabus, lecture notes, and references for every subject.
+- **Adaptive Theme**: Seamless Dark Mode for late-night study sessions.
+- **Mobile First**: Fully responsive design that works perfectly on any device.
+- **Secure Auth**: Robust security using JWT (JSON Web Tokens) and Bcrypt hashing.
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 | Login Page | Dashboard |
 |:---:|:---:|
@@ -36,7 +36,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **Framework**: React 18 (Vite)
@@ -55,7 +55,7 @@
 
 ---
 
-## ⚙️ Local Development
+## Local Development
 
 ### 1. Prerequisites
 - **Node.js** (v18+)
@@ -112,7 +112,7 @@ npm run dev
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 | Endpoint | Method | Description |
 |:---|:---|:---|
@@ -124,7 +124,7 @@ npm run dev
 
 ---
 
-## 🚀 Future Roadmap
+## Future Roadmap
 - [ ] **Email Reminders**: Automated alerts 24h before deadlines.
 - [ ] **Calendar View**: Visual monthly timeline of all tasks.
 - [ ] **Study Groups**: Shared course folders for collaboration.
@@ -132,11 +132,11 @@ npm run dev
 
 ---
 
-## 👨‍💻 Author
+## Author
 **Shamshad**
 - GitHub: [@shamshad0003](https://github.com/shamshad0003)
 
 ---
 
-## 📜 License
+## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
