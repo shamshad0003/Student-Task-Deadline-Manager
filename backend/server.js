@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs");
 require("dotenv").config();
 const errorMiddleware = require("./middleware/errorMiddleware");
 
@@ -80,7 +81,11 @@ app.use('/api/tasks', require('./routes/taskRoutes'));
 app.use('/api/files', require('./routes/fileRoutes'));
 
 // Static Files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+app.use('/uploads', express.static(uploadDir));
 
 // API Base Route
 app.get('/api', (req, res) => {

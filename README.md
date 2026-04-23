@@ -20,7 +20,9 @@ I built this project to solve a problem every student faces: staying on top of m
 - **Personalized Accounts**: Secure authentication to keep your academic data private.
 - **Dynamic Dashboard**: A bird's-eye view of your total, pending, and completed tasks.
 - **Course Management**: Organized sections for each of your subjects.
-- **Smart Task Tracking**: Detailed task list with due dates and progress toggles.
+- **Smart Task Tracking**: Detailed task list with due dates, search filter, and progress toggles.
+- **Course Materials**: Upload documents, notes, and references for each course.
+- **Dark Mode**: Toggleable dark/light themes for late-night study sessions.
 - **Responsive Design**: Works perfectly whether you're studying on a laptop or checking on your phone.
 
 ## Tech Stack 🛠️
@@ -102,10 +104,9 @@ I've deployed the full app so it can be used anywhere:
 - **Backend API**: Hosted on [Render](https://student-task-deadline-manager.onrender.com)
 
 ## Future Improvements
-- [ ] **Dark Mode**: For late-night study sessions.
-- [ ] **Search Bar**: Quickly find specific tasks or courses.
 - [ ] **Email Reminders**: Get an alert 24 hours before a deadline.
-- [ ] **File Uploads**: Attach syllabus or lecture notes to courses.
+- [ ] **Calendar View**: See your deadlines in a monthly calendar format.
+- [ ] **Collaboration**: Share courses or tasks with study buddies.
 
 ## Author
 **Shamshad**
