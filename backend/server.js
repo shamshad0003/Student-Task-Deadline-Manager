@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 const errorMiddleware = require("./middleware/errorMiddleware");
 
@@ -76,6 +77,10 @@ app.use((req, res, next) => {
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
+app.use('/api/files', require('./routes/fileRoutes'));
+
+// Static Files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API Base Route
 app.get('/api', (req, res) => {

@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 async function initializeDatabase() {
   const connection = await mysql.createConnection({
@@ -58,6 +58,22 @@ async function initializeDatabase() {
       )
     `);
     console.log('Tasks table checked/created.');
+    
+    // Files Table
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS files (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        course_id INT NOT NULL,
+        filename VARCHAR(255) NOT NULL,
+        original_name VARCHAR(255) NOT NULL,
+        file_path VARCHAR(255) NOT NULL,
+        file_type VARCHAR(50),
+        file_size INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+      )
+    `);
+    console.log('Files table checked/created.');
 
   } catch (error) {
     console.error('Error initializing database:', error);

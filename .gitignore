@@ -31,3 +31,5 @@ backend/scripts/test-connection.js
 backend/scripts/check-tables.js
 backend/scripts/init-db-robust.js
 push_error.txt
+# Uploads
+uploads/

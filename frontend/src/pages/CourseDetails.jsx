@@ -4,6 +4,7 @@ import courseService from '../services/courseService';
 import taskService from '../services/taskService';
 import TaskCard from '../components/tasks/TaskCard';
 import TaskForm from '../components/tasks/TaskForm';
+import CourseMaterials from '../components/courses/CourseMaterials';
 import LoadingState from '../components/courses/LoadingState';
 import { TaskCardSkeleton } from '../components/shared/Skeleton';
 import toast from 'react-hot-toast';
@@ -297,6 +298,9 @@ const CourseDetails = () => {
           </div>
         )}
       </div>
+
+      {/* Course Materials Section */}
+      <CourseMaterials courseId={id} />
 
       {/* Task Form Modal */}
       {isFormOpen && (
