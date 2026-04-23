@@ -133,7 +133,7 @@ const CourseForm = ({ course, onSave, onCancel, isLoading }) => {
               type="button"
               onClick={onCancel}
               disabled={isLoading}
-              className="mt-3 w-full inline-flex justify-center rounded-xl border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-bold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto transition-all"
+              className="mt-3 w-full inline-flex justify-center rounded-xl border border-gray-300 dark:border-slate-700 shadow-sm px-6 py-3 bg-white dark:bg-slate-800 text-base font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto transition-all"
             >
               Cancel
             </button>

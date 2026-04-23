@@ -175,7 +175,7 @@ const TaskForm = ({ task, onSave, onCancel, isLoading }) => {
               type="button"
               onClick={onCancel}
               disabled={isLoading}
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-2xl px-8 py-4 text-sm font-black text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-all font-bold"
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-2xl px-8 py-4 text-sm font-black text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800 transition-all font-bold"
             >
               Cancel
             </button>

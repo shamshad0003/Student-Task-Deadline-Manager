@@ -21,6 +21,16 @@ body {
 html.dark {
   background-color: #020617; /* deep slate-950 */
   color: #f8fafc; /* slate-50 */
+  color-scheme: dark;
+}
+
+/* Force text colors in dark mode for common elements */
+.dark p, .dark span:not(.no-dark), .dark label {
+  color: #94a3b8; /* slate-400 equivalent for body text */
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6, .dark strong {
+  color: #f8fafc; /* slate-50 for headings */
 }
 
 /* Custom Scrollbar */

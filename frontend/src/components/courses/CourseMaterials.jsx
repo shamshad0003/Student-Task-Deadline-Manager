@@ -200,7 +200,7 @@ const CourseMaterials = ({ courseId }) => {
                 </div>
             ) : (
                 <div className="py-12 border-2 border-dashed border-gray-100 dark:border-slate-700 rounded-[2rem] text-center">
-                    <p className="text-gray-400 font-medium">No materials uploaded for this course yet.</p>
+                    <p className="text-gray-400 dark:text-gray-500 font-medium">No materials uploaded for this course yet.</p>
                 </div>
             )}
         </div>
